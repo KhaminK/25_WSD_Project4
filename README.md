@@ -1,4 +1,4 @@
-<img width="2879" height="1454" alt="image" src="https://github.com/user-attachments/assets/c2de20bd-9144-4cef-9973-6455fb6640f3" /><img width="2879" height="1459" alt="image" src="https://github.com/user-attachments/assets/7b0aad4a-5385-4d16-ba16-7c68f2830aaa" />
+<img width="2879" height="1459" alt="image" src="https://github.com/user-attachments/assets/7b0aad4a-5385-4d16-ba16-7c68f2830aaa" />
 기본 페이지
 
 <img width="2879" height="1461" alt="image" src="https://github.com/user-attachments/assets/810cddb6-9154-4083-b791-991e5f5c960b" />
