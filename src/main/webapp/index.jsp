@@ -1,120 +1,63 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>간단한 게시판</title>
+<%@ page import="org.example.inclassdemo4444.com.myproject.board.*" %>
+<%@ page import="java.util.List" %>
 
-    <style>
-        body {
-            padding: 30px;
-        }
+<%
+    BoardDAO dao = new BoardDAO();
+    String field = request.getParameter("field");
+    String keyword = request.getParameter("keyword");
+    List<BoardVO> list;
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+    if(field != null && keyword != null && !keyword.trim().isEmpty()) {
+        list = dao.searchBoard(field, keyword);
+    } else {
+        list = dao.getBoardList();
+    }
+%>
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
 
-        .btn-add {
-            display: inline-block;
-            background-color: #007bff;
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .btn-add:hover {
-            background-color: #0056b3;
-        }
+<jsp:include page="top.jsp" />
+<jsp:include page="header.jsp" />
 
-        .board-table {
-            width: 100%;
-            /* 이거 하면 한 줄로 합쳐짐 */
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
+<h2>게시판 목록</h2>
 
-        .board-table th, .board-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
+<form method="get" action="index.jsp" class="mb-3 d-flex">
+    <select name="field" class="form-select me-2" style="width: 120px;">
+        <option value="title">제목</option>
+        <option value="writer">작성자</option>
+        <option value="content">내용</option>
+    </select>
+    <input type="text" name="keyword" class="form-control me-2" placeholder="검색어 입력">
+    <button type="submit" class="btn btn-primary">검색</button>
+</form>
 
-        .board-table th {
-            background-color: #f2f2f2;
-        }
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>조회수</th>
+        <th>작성일</th>
+        <th>관리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for(BoardVO vo : list) { %>
+    <tr>
+        <td><%= vo.getSeq() %></td>
+        <td><a href="view.jsp?seq=<%= vo.getSeq() %>"><%= vo.getTitle() %></a></td>
+        <td><%= vo.getWriter() %></td>
+        <td><%= vo.getCnt() %></td>
+        <td><%= vo.getRegdate() %></td>
+        <td>
+            <a href="edit.jsp?seq=<%= vo.getSeq() %>" class="btn btn-primary btn-sm">수정</a>
+            <a href="delete.jsp?seq=<%= vo.getSeq() %>" class="btn btn-danger btn-sm">삭제</a>
+        </td>
+    </tr>
+    <% } %>
+    </tbody>
+</table>
 
-        .board-table td a {
-            text-decoration: none;
-            color: #555;
-            margin-right: 10px;
-        }
-        .board-table td a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-
-    <div class="header">
-        <h2>자유게시판</h2>
-        <a href="write.html" class="btn-add">글쓰기 (Add)</a>
-    </div>
-
-    <table class="board-table">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Writer</th>
-            <th>Date</th>
-            <th>Menu</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr>
-            <td>3</td>
--            <td><a href="view.jsp">첫 번째 게시글</a></td>
-            <td>호날두</td>
-            <td>2025-11-16</td>
-            <td>
-                <a href="edit.html">수정</a>
-                <a href="delete_ok.jsp">삭제</a>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td><a href="view.jsp">두 번째 게시글</a></td>
-            <td>Ronaldo</td>
-            <td>2025-11-15</td>
-            <td>
-                <a href="edit.html">수정</a>
-                <a href="delete_ok.jsp">삭제</a>
-            </td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td><a href="view.jsp">세 번째 게시글</a></td>
-            <td>SIUUU</td>
-            <td>2025-11-14</td>
-            <td>
-                <a href="edit.html">수정</a>
-                <a href="delete_ok.jsp">삭제</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-</div>
-
-</body>
-</html>
+<jsp:include page="footer.jsp" />
+<jsp:include page="bottom.jsp" />
